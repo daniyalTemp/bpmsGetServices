@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 class golestanController extends Controller
 {
-    public function getStudentData(Request $request , $id)
+    public function getStudentData(Request $request )
     {
+        $id = $request->stNum;
 
         if ($id == "9711415031")
             return response() ->json([
@@ -27,7 +28,7 @@ class golestanController extends Controller
                     "fullName" => "دانیال رومیانی",
                     "grade" => "کارشناسی ارشد",
                     "GPA" => "18.6",
-                    "passedUnitsCount" => "138",
+                    "passedUnitsCount" => "140",
 
                 ])
             ]);
