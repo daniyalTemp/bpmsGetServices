@@ -14,4 +14,8 @@ Route::get('/showServices', 'App\Http\Controllers\apiController@showServices');
 
 
 
+Route::get('/studentData/{stId}', 'App\Http\Controllers\golestanController@getStudentData');
+
+
+
 
