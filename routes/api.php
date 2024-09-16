@@ -18,4 +18,12 @@ Route::get('/studentData', 'App\Http\Controllers\golestanController@getStudentDa
 
 
 
+Route::get('/getAddress', 'App\Http\Controllers\postController@getAddress');
+
+
+
+Route::post('/getInquiry', 'App\Http\Controllers\msrtcontroller@getInquiry');
+
+
+
 
