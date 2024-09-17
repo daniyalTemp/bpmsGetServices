@@ -14,18 +14,20 @@ class msrtController extends Controller
 //        dd(request()->all());
 
         degree::create([
-            'fullName'=>$request->fullName,
-            'stNumber'=>$request->stNumber,
-            'nationalCode'=>$request->nCode,
-            'major'=>$request->major,
-            'grade'=>$request->grade,
-            'status'=>'wait'
+            'fullName' => $request->fullName,
+            'stNumber' => $request->stNumber,
+            'nationalCode' => $request->nCode,
+            'major' => $request->major,
+            'grade' => $request->grade,
+            'tracking' => $request->tracking,
+            'status' => 'wait'
         ]);
-        return response()->json(['success'=>'Inquiry submitted successfully']);
+        return response()->json(['success' => 'Inquiry submitted successfully']);
     }
+
     public function index()
     {
-        $degrees = degree::where('status' , 'wait')->get();
+        $degrees = degree::where('status', 'wait')->get();
         return view('msrt.index', compact('degrees'));
     }
 
@@ -40,8 +42,6 @@ class msrtController extends Controller
     {
 
 
-
-
 //        dd($request->all());
 
         $degree = degree::find($id);
@@ -50,44 +50,49 @@ class msrtController extends Controller
                 $degree->debt = $request->debt;
                 $degree->status = 'debt';
             } elseif ($request->get('status') == 'free') {
-                $degree->status= 'free';
+                $degree->status = 'free';
             }
-           /* dd(array('data' => array(
-                'status'=>$degree->status,
-                'debt'=>$degree->debt,
-            )));*/
+            /* dd(array('data' => array(
+                 'status'=>$degree->status,
+                 'debt'=>$degree->debt,
+             )));*/
             $degree->save();
-            //todo
-            //call Response ServiceTarget
 
 
+            //send to Caller
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'bpms.daniyalroomiyani.ir/api/getService',
+                CURLOPT_URL => 'https://es.razi.ac.ir/ws/call/test',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_TIMEOUT => 0,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array('data' => json_encode(array(
-                    'status'=>$degree->status,
-                    'debt'=>$degree->debt,
-                )),
-                    'success' => '1',
-                    'message' => ' From dani'),
-
+                CURLOPT_POSTFIELDS => '{
+                                            "data":    {
+                                            "status":"'.$degree->status.'",
+                                            "debt":"'.$degree->debt.'"
+                                            } ,
+                                            "tracking":"'.$degree->tracking.'",
+                                            "message":"From Daniyal"
+                                            }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'Authorization: Basic MzI0MjM3ODY0NTpBYmNAMTIzNDU2',
+                ),
             ));
-//            dd($curl->);
-//            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+
             $response = curl_exec($curl);
-//dd($response);
+
             curl_close($curl);
+//            dd($response);
 
         }
-
 
 
         return redirect()->route('msrt.index');

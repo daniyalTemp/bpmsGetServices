@@ -17,5 +17,6 @@ class degree extends Model
       'stNumber',
       'nationalCode',
       'fullName',
+      'tracking',
     ];
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('stNumber')->nullable();
             $table->string('grade')->nullable();
             $table->string('major')->nullable();
+            $table->string('tracking')->nullable();
             $table->enum('status' , ['wait' ,'free' , 'debt'])->nullable();
             $table->string('debt')->nullable();
             $table->timestamps();
@@ -29,7 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('degrees');
 
     }
 };

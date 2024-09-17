@@ -92,6 +92,7 @@
                                                         <h5 class="h5">Degree : {{$degree->grade}}</h5>
                                                         <h5 class="h5">major : {{$degree->major}}</h5>
                                                         <h5 class="h5">status : {{$degree->status}}</h5>
+                                                        <h5 class="h5">tracking : {{$degree->tracking}}</h5>
 
                                                     <br>
                                                     <div style="display:grid ;grid-template-columns: 1fr  1fr">
@@ -179,6 +180,8 @@
                                                             <h5 class="h5">Degree : {{$degree->grade}}</h5>
                                                             <h5 class="h5">major : {{$degree->major}}</h5>
                                                             <h5 class="h5">status : {{$degree->status}}</h5>
+                                                            <h5 class="h5">tracking : {{$degree->tracking}}</h5>
+
                                                         </div>
                                                     </div>
 
