@@ -25,5 +25,9 @@ Route::get('/getAddress', 'App\Http\Controllers\postController@getAddress');
 Route::post('/getInquiry', 'App\Http\Controllers\msrtcontroller@getInquiry');
 
 
+Route::post('/SendData', 'App\Http\Controllers\apiController@SendData');
+
+
+
 
 
